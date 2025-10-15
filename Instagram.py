@@ -2,7 +2,9 @@ from fastapi import FastAPI, Request
 import requests
 import os
 from dotenv import load_dotenv
+import uvicorn
 
+# .env faylini yuklash
 load_dotenv()
 
 app = FastAPI()
@@ -29,3 +31,7 @@ def download_instagram(url: str):
         return {"success": True, "data": data}
     except Exception as e:
         return {"success": False, "error": str(e)}
+
+# Bu qator Render uchun 24/7 serverni ishga tushiradi
+if __name__ == "__main__":
+    uvicorn.run("Instagram:app", host="0.0.0.0", port=int(os.environ.get("PORT", 8000)), log_level="info")
